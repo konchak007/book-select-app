@@ -10,12 +10,17 @@ class AmazonService {
       defaultViewport: null,
       args: ["--start-maximized"],
     });
+    browser.onPage("close", this.onPageClose);
 
     await browser.goto(`${this.searchUrl}${bookName}+hardcover`);
 
     await browser.clickByTagAndText("a", "Hardcover");
     await browser.clickBySelector("#add-to-cart-button");
     await browser.clickBySelector("#nav-cart");
+  }
+
+  public static onPageClose() {
+    process.exit(0);
   }
 }
 

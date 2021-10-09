@@ -33,6 +33,32 @@ class BookService {
 
     return names;
   }
+
+  public static async getBooksByGenre(genre: string): Promise<string[]> {
+    const browser = new Browser();
+    await browser.init({
+      headless: true,
+    });
+
+    await browser.goto(this.url);
+
+    await browser.clickByTagAndText("h4", genre);
+    await browser.waitForSelector(".resultShown");
+
+    const bookList = await browser.page.evaluate(() => {
+      return Array.from(
+        document.querySelectorAll(".resultShown .answerWrapper img")
+      ).map((imgElement) => {
+        const bookName = imgElement.getAttribute("alt");
+
+        return bookName;
+      });
+    });
+
+    browser.close();
+
+    return bookList;
+  }
 }
 
 export default BookService;

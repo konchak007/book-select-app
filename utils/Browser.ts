@@ -1,4 +1,8 @@
-import puppeteer, { Browser as BrowserType, Page } from "puppeteer";
+import puppeteer, {
+  Browser as BrowserType,
+  Page,
+  PageEventObject,
+} from "puppeteer";
 
 class Browser {
   private instance: BrowserType = null;
@@ -30,6 +34,14 @@ class Browser {
 
   public close() {
     return this.instance.close();
+  }
+
+  public async waitForSelector(selector: string) {
+    await this.page.waitForSelector(selector);
+  }
+
+  public onPage(eventType: keyof PageEventObject, callback: () => void) {
+    this.page.on(eventType, callback);
   }
 
   public get page() {

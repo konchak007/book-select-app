@@ -20,6 +20,6 @@ In the project directory, you can run:
 
 Starts the application
 
-### `yarn dev`
+### `npm run dev`
 
 Starts the application using `nodemon` with hotreload
